@@ -89,7 +89,7 @@ function<RetT(ArgTs...)>::function(function const& other)
     if (in_place) {
         memcpy(mem, other.mem, mem_size);
     } else {
-        ptr = other.ptr->make_copy();
+        ptr = other.ptr ? other.ptr->make_copy() : nullptr;
     }
 }
 

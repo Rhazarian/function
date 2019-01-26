@@ -89,3 +89,9 @@ TEST(correctness, copy_fptr)
     function<int(int)> copy(func);
     EXPECT_EQ(20, copy(10));
 }
+
+TEST(correctess, nullptr_copy)
+{
+    function<void(int)> func(nullptr);
+    auto func2(func);
+}
