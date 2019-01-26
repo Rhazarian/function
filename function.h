@@ -29,6 +29,7 @@ private:
         virtual ~func_holder() = default;
         virtual RetT operator()(ArgTs&&... args) const = 0;
         virtual func_holder* make_copy() const = 0;
+        virtual void construct_copy_on_mem(void* mem) const = 0;
     };
 
     template<typename FuncT>
@@ -38,6 +39,7 @@ private:
         ~func_t_holder() override = default;
         RetT operator()(ArgTs&&... args) const override;
         func_t_holder* make_copy() const override;
+        void construct_copy_on_mem(void* mem) const override;
     private:
         FuncT func;
     };
@@ -73,6 +75,13 @@ typename function<RetT(ArgTs...)>::template func_t_holder<FuncT>* function<RetT(
 }
 
 template<typename RetT, typename... ArgTs>
+template<typename FuncT>
+void function<RetT(ArgTs...)>::func_t_holder<FuncT>::construct_copy_on_mem(void* mem) const
+{
+    new (mem) func_t_holder(func);
+}
+
+template<typename RetT, typename... ArgTs>
 function<RetT(ArgTs...)>::function() noexcept {
     ptr = nullptr;
 };
@@ -87,7 +96,7 @@ function<RetT(ArgTs...)>::function(function const& other)
 {
     in_place = other.in_place;
     if (in_place) {
-        memcpy(mem, other.mem, mem_size);
+        reinterpret_cast<func_holder*>(other.mem)->construct_copy_on_mem(mem);
     } else {
         ptr = other.ptr ? other.ptr->make_copy() : nullptr;
     }
