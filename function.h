@@ -44,7 +44,7 @@ private:
 
     static constexpr auto mem_size = 16;
     union {
-        char mem[mem_size]{};
+        mutable char mem[mem_size]{};
         func_holder* ptr;
     };
     bool in_place = false;
