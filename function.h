@@ -99,6 +99,7 @@ template<typename RetT, typename... ArgTs>
 function<RetT(ArgTs...)>::function(function&& other) noexcept
 {
     ptr = nullptr;
+    in_place = false;
     swap(other);
 }
 
