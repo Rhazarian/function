@@ -2,8 +2,6 @@
 #define FUNCTION_H
 
 #include <cstddef>
-#include <array>
-#include <memory>
 #include <cstring>
 #include <functional>
 
