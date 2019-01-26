@@ -134,6 +134,8 @@ function<RetT(ArgTs...)>& function<RetT(ArgTs...)>::operator=(function<RetT(ArgT
 template<typename RetT, typename... ArgTs>
 function<RetT(ArgTs...)>& function<RetT(ArgTs...)>::operator=(function<RetT(ArgTs...)>&& other) noexcept
 {
+    ptr = nullptr;
+    in_place = false;
     swap(other);
     return *this;
 }
