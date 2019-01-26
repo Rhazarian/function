@@ -81,3 +81,11 @@ TEST(correctness, assign_nullptr_to_fptr)
     func = nullptr;
     EXPECT_EQ(false, !!func);
 }
+
+TEST(correctness, copy_fptr)
+{
+    function<int(int)> func = test_a;
+    EXPECT_EQ(20, func(10));
+    function<int(int)> copy(func);
+    EXPECT_EQ(20, copy(10));
+}
