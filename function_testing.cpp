@@ -1,9 +1,6 @@
 #include "function.h"
 #include "gtest/gtest.h"
 
-//template<typename T>
-//using function = my::function<T>;
-
 TEST(correctess, simple_lambda)
 {
     function<int(int)> func = [](int a) {
